@@ -12,7 +12,7 @@ const Add = ({ setTodos }: { setTodos: Dispatch<SetStateAction<todo[]>> }) => {
     setTodos(todos => ([
       ...todos,
       {
-        key: todos.length + 1,
+        id: todos.length + 1,
         label: form.get("label") as string,
         tags: (form.get("tags") as string).split(','),
         deadline: new Date(form.get("deadline") as string),

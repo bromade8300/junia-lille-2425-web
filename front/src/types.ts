@@ -1,5 +1,5 @@
 export type todo = {
-  key: number;
+  id: number;
   label: string;
   tags: string[];
   deadline: Date;

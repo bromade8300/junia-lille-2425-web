@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Todo from "@components/Todo";
 import Add from "@components/Add";
 import { type todo } from "../../types";
@@ -10,8 +10,8 @@ const Dashboard = () => {
   return <>
     <h2>Dashboard</h2>
     {
-      todos.map(({ key, label, deadline, done, tags }: todo) =>
-        <Todo key={key} label={label} tags={tags} deadline={deadline} done={done} />)
+      todos.map(({ id, label, deadline, done, tags }: todo) =>
+        <Todo key={id} id={id} label={label} tags={tags} deadline={deadline} done={done} setTodos={setTodos} />)
     }
     <Add setTodos={setTodos} />
   </>
