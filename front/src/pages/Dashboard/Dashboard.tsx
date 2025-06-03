@@ -1,29 +1,13 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import Todo from "@components/Todo";
 import Add from "@components/Add";
 import { type todo } from "../../types";
-// import { data } from "../../data";
+import { getTodos } from "../../services";
 
 const Dashboard = () => {
   const [todos, setTodos] = useState<todo[]>([]);
-  const [error, setError] = useState<null | string>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      const res = await fetch("http://localhost:3000/todo");
-      console.log(res);
-      if (!res.ok) {
-        setIsLoading(false);
-        setError("Une erreur est survenue");
-      } else {
-        const result = await res.json();
-        setIsLoading(false);
-        setTodos(result);
-      }
-    }
-    fetchData();
-  }, []);
+  const { data, error, isLoading } = useQuery<todo[]>({ queryKey: ['todos'], queryFn: getTodos })
 
   const [filterByNotDone, setFilterByNotDone] = useState(true);
   return <>
@@ -31,13 +15,12 @@ const Dashboard = () => {
     {
       isLoading ? error && <p>{error}</p> : <ul>
         {
-          todos
-            .filter(({ done }) => {
-              if (filterByNotDone) {
-                return !done
-              }
-              return true
-            })
+          data?.filter(({ done }) => {
+            if (filterByNotDone) {
+              return !done
+            }
+            return true
+          })
             .map(({ id, label, deadline, done, tags }: todo) =>
               <Todo key={id} id={id} label={label} tags={tags} deadline={deadline} done={done} setTodos={setTodos} />)
         }
@@ -46,7 +29,7 @@ const Dashboard = () => {
 
     <label htmlFor="displayAllTodos">Afficher toutes les todos</label> <input type="checkbox" name="displayAllTodos" id="displayAllTodos" checked={!filterByNotDone} onChange={() => setFilterByNotDone(filterByNotDone => !filterByNotDone)} />
 
-    <Add setTodos={setTodos} />
+    {/* <Add setTodos={setTodos} /> */}
   </>
 }
 
