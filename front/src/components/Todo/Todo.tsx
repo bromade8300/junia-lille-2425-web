@@ -21,7 +21,7 @@ const Todo = ({ id, label, tags, deadline, done, setTodos }: todo & { setTodos: 
           </ul>
           <span className={style.date}>{new Intl.DateTimeFormat("fr-FR", {
             dateStyle: "full"
-          }).format(deadline)}</span>
+          }).format(new Date(deadline))}</span>
         </div>
       </div>
     </li>

@@ -1,11 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Todo from "@components/Todo";
 import Add from "@components/Add";
 import { type todo } from "../../types";
-import { data } from "../../data";
+// import { data } from "../../data";
 
 const Dashboard = () => {
-  const [todos, setTodos] = useState(data);
+  const [todos, setTodos] = useState<todo[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch("http://localhost:3000/todo");
+      const result = await res.json();
+      setTodos(result);
+    }
+    fetchData();
+  }, []);
+
   const [filterByNotDone, setFilterByNotDone] = useState(true);
   return <>
     <h2>Dashboard</h2>
