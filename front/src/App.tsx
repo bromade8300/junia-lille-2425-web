@@ -1,15 +1,19 @@
 import Dashboard from '@pages/Dashboard';
-import style from "./app.module.scss";
+import About from '@pages/About';
+import Details from '@pages/Details';
+import MainLayout from "@layout/MainLayout";
+import { Routes, Route } from "react-router";
 
 function App() {
   return (
-    <div className={style.layout}>
-      <header className={style.header}><h1 className={style.title}>My Todo App</h1></header>
-      <main className={style.container}>
-        <Dashboard />
-      </main>
-      <footer className={style.footer}>Junia - WEB - 2425</footer>
-    </div>
+    <Routes>
+      <Route element={<MainLayout />}>
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/details/:id/:test" element={<Details />} />
+      </Route>
+    </Routes>
+
   )
 }
 

@@ -11,7 +11,7 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      '@layouts': resolve(__dirname, './src/layouts'),
+      '@layout': resolve(__dirname, './src/layout'),
       '@services': resolve(__dirname, './src/services'),
       '@components': resolve(__dirname, './src/components'),
       '@pages': resolve(__dirname, './src/pages'),
