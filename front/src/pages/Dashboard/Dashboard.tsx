@@ -6,12 +6,18 @@ import { type todo } from "../../types";
 
 const Dashboard = () => {
   const [todos, setTodos] = useState<todo[]>([]);
+  const [error, setError] = useState<null | string>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetch("http://localhost:3000/todo");
-      const result = await res.json();
-      setTodos(result);
+      console.log(res);
+      if (!res.ok) {
+        setError("Une erreur est survenue");
+      } else {
+        const result = await res.json();
+        setTodos(result);
+      }
     }
     fetchData();
   }, []);
@@ -19,6 +25,7 @@ const Dashboard = () => {
   const [filterByNotDone, setFilterByNotDone] = useState(true);
   return <>
     <h2>Dashboard</h2>
+    {error && <p>{error}</p>}
     <label htmlFor="displayAllTodos">Afficher toutes les todos</label> <input type="checkbox" name="displayAllTodos" id="displayAllTodos" checked={!filterByNotDone} onChange={() => setFilterByNotDone(filterByNotDone => !filterByNotDone)} />
     <ul>
       {
