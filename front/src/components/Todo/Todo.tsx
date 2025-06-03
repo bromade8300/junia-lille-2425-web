@@ -6,7 +6,7 @@ import style from "./todo.module.scss";
 const Todo = ({ id, label, tags, deadline, done, setTodos }: todo & { setTodos: Dispatch<SetStateAction<todo[]>> }) => {
   return (
     <li className={style.todo} aria-label={`todo : ${label}`}>
-      <input type="checkbox" name="done" checked={done} className={style.check} onChange={() => setTodos((todos: todo[]) => todos.map((todo: todo) => {
+      <input type="checkbox" name="done" aria-label={`check ${label}`} checked={done} className={style.check} onChange={() => setTodos((todos: todo[]) => todos.map((todo: todo) => {
         const copyTodo = structuredClone(todo);
         if (id === copyTodo.id) {
           copyTodo.done = !copyTodo.done;
