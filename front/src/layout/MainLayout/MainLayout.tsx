@@ -6,7 +6,7 @@ const MainLayout = () => (<>
   <div className={style.layout}>
     <header className={style.header}>
       <h1 className={style.title}>My Todo App</h1>
-      <nav>
+      <nav className={style.nav}>
         <ul>
           <li>
             <Link to="/">Home</Link>

@@ -1,6 +1,6 @@
 const About = () => (<>
-  <h1>About</h1>
-  <h2>Junia</h2>
+  <h2>About</h2>
+  <h3>Junia</h3>
 </>
 )
 
