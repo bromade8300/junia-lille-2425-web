@@ -1,11 +1,8 @@
 import { http, HttpResponse } from 'msw'
+import getTodo from "./fixtures/getTodo.json";
 
 export const handlers = [
-  http.get('https://api.example.com/user', () => {
-    return HttpResponse.json({
-      id: 'abc-123',
-      firstName: 'John',
-      lastName: 'Maverick',
-    })
-  }),
+  // http.get('http://localhost:3000/todo', () => {
+  //   return HttpResponse.json(getTodo);
+  // }),
 ]
