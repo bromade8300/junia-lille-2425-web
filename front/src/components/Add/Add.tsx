@@ -1,26 +1,33 @@
-import { type Dispatch, type FormEvent, type SetStateAction } from "react";
+import { type FormEvent, } from "react";
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { type todo } from "../../types";
+import { addTodo } from "@services/api";
 
-const Add = ({ setTodos }: { setTodos: Dispatch<SetStateAction<todo[]>> }) => {
+const Add = ({ lastId }: { lastId: number }) => {
+  const queryClient = useQueryClient()
+  const mutation = useMutation({
+    mutationFn: addTodo,
+    onSuccess: data => {
+      queryClient.setQueryData(['todos'], data);
+    }
+  })
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = new FormData(e.currentTarget);
-
-    console.log(form.get("deadline"));
-
-    setTodos(todos => ([
-      ...todos,
+    mutation.mutate(
       {
-        id: todos.length + 1,
+        id: lastId + 1,
         label: form.get("label") as string,
         tags: (form.get("tags") as string).split(','),
         deadline: new Date(form.get("deadline") as string),
         done: false
       }
-    ]))
-    // e.currentTarget.reset();
+    )
+    e.currentTarget.reset();
   }
+
+
   return <>
     <h2>
       Ajouter

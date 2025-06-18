@@ -5,6 +5,8 @@ const port = 3000;
 const app = express();
 
 app.use(cors())
+app.use(express.json());
+app.use(express.urlencoded())
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
@@ -19,6 +21,11 @@ app.get("/todo", (req, res) => {
 app.put("/todo/:id", (req, res) => {
   const indexToModify = data.findIndex(({id}) => Number(req.params.id) === Number(id))
   data[indexToModify].done = !data[indexToModify].done;
+  return res.json(data);
+})
+
+app.post("/todo", (req, res) => {
+  data.push(req.body);
   return res.json(data);
 })
 
