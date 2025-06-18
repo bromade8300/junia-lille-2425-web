@@ -1,18 +1,22 @@
-import { type Dispatch, type SetStateAction } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { type todo } from '../../types';
 import style from "./todo.module.scss";
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { changeTodo } from "@services/index";
 
-const Todo = ({ id, label, tags, deadline, done, setTodos }: todo & { setTodos: Dispatch<SetStateAction<todo[]>> }) => {
+const Todo = ({ id, label, tags, deadline, done }: todo) => {
+  const queryClient = useQueryClient()
+  const { mutate } = useMutation({
+    mutationFn: changeTodo,
+    onSuccess: data => {
+      queryClient.setQueryData(['todos'], data);
+    }
+  })
   return (
     <li className={style.todo} aria-label={`todo : ${label}`}>
-      <input type="checkbox" name="done" aria-label={`check ${label}`} checked={done} className={style.check} onChange={() => setTodos((todos: todo[]) => todos.map((todo: todo) => {
-        const copyTodo = structuredClone(todo);
-        if (id === copyTodo.id) {
-          copyTodo.done = !copyTodo.done;
-        }
-        return copyTodo
-      }))} />
+      <input type="checkbox" name="done" aria-label={`check ${label}`} checked={done} className={style.check} onChange={() => {
+        mutate(id);
+      }} />
       <div className="info">
         <h3 className={style.title}>{label}</h3>
         <div className={style.meta}>

@@ -38,6 +38,9 @@
       "@layout/*": [
         "layout/*"
       ],
+      "@services/*": [
+        "services/*"
+      ],
     },
   },
   "include": [

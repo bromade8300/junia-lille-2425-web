@@ -1,1 +1,1 @@
-export { getTodos } from "./api";
+export { getTodos, changeTodo } from "./api";
